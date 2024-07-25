@@ -7,41 +7,49 @@ import { reactive } from 'vue';
       resultado: 0
     })
 
-    function somar() {
-      estado.resultado = estado.num1 + estado.num2
-    }
+    function calcular(opcao) {
+      switch (opcao) {
+        case '+':
+          estado.resultado = parseFloat(estado.num1) + parseFloat(estado.num2);
+          break;
+        
+          case '-':
+          estado.resultado = estado.num1 - estado.num2;
+          break;
 
-    function subtrair() {
-      estado.resultado = estado.num1 - estado.num2
-    }
+        case '*':
+          estado.resultado = estado.num1 * estado.num2;
+          break;
 
-    function multiplicar() {
-      estado.resultado = estado.num1 * estado.num2
-    }
+        case '/':
+          estado.resultado = estado.num1 / estado.num2;
+          break;
 
-    function dividir() {
-      estado.resultado = estado.num1 / estado.num2
+        default:
+          console.error('Operação inválida');
+      }
     }
 
 </script>
 
 <template>
-  <h1>Calculadora</h1>
+    <h1>Calculadora</h1>
 
-  <form >
-    <input @keyup="evento => estado.num1 = evento.target.value" type="number" v-model="num1">
-    <input @keyup="evento => estado.num2 = evento.target.value" type="number" v-model="num2">
+    <form >
+      <input @keyup="estado.num1 = $event.target.value" type="number" placeholder="Número 1">
+      <input @keyup="estado.num2 = $event.target.value" type="number" placeholder="Número 2">
 
-    <select class="form-control" name="" id="">
-      <option @select="somar" value="somar">+</option>
-      <option @select="subtrair" value="subtrair">-</option>
-      <option @select="multiplicar" value="multiplicar">*</option>
-      <option @select="dividir" value="dividir">/</option>
-    </select>
-    <p>Resultado: {{ estado.resultado }}</p>
-  </form>
+      <select @change="calcular($event.target.value)" class="form-control" name="" id="">
+        <option value="+">+</option>
+        <option value="-">-</option>
+        <option value="*">*</option>
+        <option value="/">/</option>
+      </select>
+      <p>Resultado: {{ estado.resultado }}</p>
+    </form>
 </template>
 
 <style scoped>
+
 
 </style>
